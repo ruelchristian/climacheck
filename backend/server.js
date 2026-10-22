@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const { initDatabase } = require('./config/db');
+
 const authRoutes = require('./routes/auth');
 const weatherRoutes = require('./routes/weather');
 const activitiesRoutes = require('./routes/activities');
@@ -41,6 +43,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(frontendDist, 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`ClimaCheck server running on port ${PORT}`);
+  await initDatabase();
 });

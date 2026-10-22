@@ -1,0 +1,29 @@
+databases:
+  - name: climacheck-db
+    databaseName: climacheck_db
+    user: climacheck_db_user
+    plan: free
+    region: singapore
+    postgresMajorVersion: 16
+
+services:
+  - type: web
+    name: climacheck
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        value: ClimaCheck_8vR!2qZ#9mK@5xT$4pL^7wN&6sY
+      - key: OPENWEATHER_API_KEY
+        value: f86eee3ba6434477b065fbf52c722d56
+      - key: DATABASE_URL
+        fromDatabase:
+          name: climacheck-db
+          property: connectionString
